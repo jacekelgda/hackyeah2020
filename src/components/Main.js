@@ -12,15 +12,7 @@ class Main extends Component {
           defaultCenter={{ lat: 54.516842, lng: 18.541941 }}
           yesIWantToUseGoogleMapApiInternals
         >
-          <Product
-            onClick={() => {
-              console.log('click ...');
-            }}
-            key="foo"
-            text="foo"
-            lat={54.516842}
-            lng={18.541941}
-          />
+          <Product key="foo" text="foo" lat={54.516842} lng={18.541941} />
         </Map>
       </Fragment>
     );
