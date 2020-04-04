@@ -74,7 +74,7 @@ const Product = props => {
       <Popper id={id} open={open} anchorEl={anchorEl} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={100}>
-            <DetailCard />
+            <DetailCard handleOwn={props.handleOwn} />
           </Fade>
         )}
       </Popper>
