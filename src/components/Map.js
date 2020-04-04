@@ -1,30 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const Wrapper = styled.main`
+  width: 100%;
+  height: 100%;
+`;
 
-class Map extends Component {
-  static defaultProps = {
-    center: {
-      lat: 54.5474,
-      lng: 18.49009,
-    },
-    zoom: 18,
-  };
+const Map = ({ children, ...props }) => {
+  console.log({ env: process.env });
+  return (
+    <Wrapper>
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        }}
+        {...props}
+      >
+        {children}
+      </GoogleMapReact>
+    </Wrapper>
+  );
+};
 
-  render() {
-    return (
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent lat={54.5474} lng={18.49009} text="My Marker" />
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
+Map.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
+};
+
+Map.defaultProps = {
+  children: null,
+};
 
 export default Map;
