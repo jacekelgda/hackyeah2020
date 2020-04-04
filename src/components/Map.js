@@ -2,14 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import GoogleMapReact from 'google-map-react';
+import { withFirebase } from './Firebase';
 
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
 `;
 
-const Map = ({ children, ...props }) => {
-  console.log({ env: process.env });
+const MapBase = ({ children, firebase, ...props }) => {
+  if (firebase) {
+    console.log(firebase);
+  }
+  console.log('render ...');
   return (
     <Wrapper>
       <GoogleMapReact
@@ -24,15 +28,17 @@ const Map = ({ children, ...props }) => {
   );
 };
 
-Map.propTypes = {
+MapBase.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
 };
 
-Map.defaultProps = {
+MapBase.defaultProps = {
   children: null,
 };
+
+const Map = withFirebase(MapBase);
 
 export default Map;

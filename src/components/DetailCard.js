@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DetailCard() {
+export default function DetailCard(props) {
   const classes = useStyles();
 
   return (
@@ -38,7 +38,7 @@ export default function DetailCard() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={props.handleOwn}>
           Szukam
         </Button>
         <Button size="small" color="primary">
