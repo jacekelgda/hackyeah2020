@@ -8,7 +8,7 @@ class Main extends Component {
     return (
       <Fragment>
         <Map
-          defaultZoom={16}
+          defaultZoom={20}
           defaultCenter={{ lat: 54.516842, lng: 18.541941 }}
           yesIWantToUseGoogleMapApiInternals
         >
