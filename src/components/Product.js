@@ -1,49 +1,85 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { green, pink, blueGrey } from '@material-ui/core/colors';
 import DetailCard from './DetailCard';
+import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
+import Popper from '@material-ui/core/Popper';
+import Fade from '@material-ui/core/Fade';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
-  background-color: #000;
-  border: 2px solid green;
-  border-radius: 100%;
-  user-select: none;
-  transform: translate(-50%, -50%);
-  cursor: ${props => (props.onClick ? 'pointer' : 'default')};
-  background-image: url('https://i5.walmartimages.ca/images/Large/094/514/6000200094514.jpg');
-  background-position: center;
-  background-size: 60px 60px;
-  &:hover {
-    z-index: 1;
-  }
-`;
+const useStyles = makeStyles(theme => ({
+  variant: {
+    width: 30,
+    height: 30,
+    border: `2px solid ${theme.palette.background.paper}`,
+  },
+  pink: {
+    color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: pink[500],
+  },
+  green: {
+    color: '#fff',
+    backgroundColor: green[500],
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  marker: {
+    cursor: 'pointer',
+    border: `2px solid ${blueGrey[500]}`,
+  },
+}));
 
 const Product = props => {
-  const [showDetail, setShowDetail] = useState(false);
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = () => {
-    setShowDetail(!showDetail);
+  const handleClick = event => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
+  const open = Boolean(anchorEl);
+  const id = open ? 'transitions-popper' : undefined;
+
   return (
-    <Wrapper onClick={() => handleClick()} alt={props.text}>
-      {showDetail && <DetailCard />}
-    </Wrapper>
+    <>
+      <Badge
+        onClick={handleClick}
+        overlap="circle"
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        badgeContent={
+          props.variant === 'search' ? (
+            <Avatar className={[classes.pink, classes.variant]}>
+              <PageviewIcon />
+            </Avatar>
+          ) : (
+            <Avatar className={[classes.green, classes.variant]}>
+              <AssignmentIcon />
+            </Avatar>
+          )
+        }
+      >
+        <Avatar
+          alt="Prod"
+          src="https://i5.walmartimages.ca/images/Large/094/514/6000200094514.jpg"
+          className={[classes.large, classes.marker]}
+        />
+      </Badge>
+      <Popper id={id} open={open} anchorEl={anchorEl} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={100}>
+            <DetailCard />
+          </Fade>
+        )}
+      </Popper>
+    </>
   );
-};
-
-Product.defaultProps = {
-  onClick: null,
-};
-
-Product.propTypes = {
-  onClick: PropTypes.func,
-  text: PropTypes.string.isRequired,
 };
 
 export default Product;
