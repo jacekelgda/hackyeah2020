@@ -10,10 +10,6 @@ const Wrapper = styled.main`
 `;
 
 const MapBase = ({ children, firebase, ...props }) => {
-  if (firebase) {
-    console.log(firebase);
-  }
-  console.log('render ...');
   return (
     <Wrapper>
       <GoogleMapReact

@@ -38,10 +38,10 @@ export default function DetailCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" onClick={props.handleOwn}>
+        <Button size="small" color="primary">
           Szukam
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={props.handleOwn}>
           Posiadam
         </Button>
       </CardActions>
