@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { myLocation, nearUserLocation } from '../staticData';
 
 import Map from './Map';
 import Product from './Product';
@@ -9,10 +10,23 @@ class Main extends Component {
       <Fragment>
         <Map
           defaultZoom={20}
-          defaultCenter={{ lat: 54.516842, lng: 18.541941 }}
+          defaultCenter={myLocation}
           yesIWantToUseGoogleMapApiInternals
         >
-          <Product key="foo" text="foo" lat={54.516842} lng={18.541941} />
+          <Product
+            key="user"
+            text="foo"
+            lat={nearUserLocation.lat}
+            lng={nearUserLocation.lng}
+            variant="search"
+          />
+          <Product
+            key="me"
+            text="foo"
+            lat={myLocation.lat}
+            lng={myLocation.lng}
+            variant="own"
+          />
         </Map>
       </Fragment>
     );
